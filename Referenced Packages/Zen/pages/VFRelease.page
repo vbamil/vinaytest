@@ -1,0 +1,22 @@
+<apex:page standardController="Zen__Release__c" tabStyle="Account" >
+   <apex:form >
+    <apex:pageblock >
+        <apex:messages />
+        <apex:pageBlockButtons location="top">
+        <apex:commandButton value="Edit" action="{!Edit}"/>
+        </apex:pageBlockButtons>
+        <apex:pageBlockSection title="Release Details">
+        <apex:outputField value="{!Zen__Release__c.Zen__Release_Name__c}"/>
+        <apex:outputField value="{!Zen__Release__c.Zen__Project_Manager__c}"/>
+        <apex:outputField value="{!Zen__Release__c.Zen__Start_Date__c}"/>
+        <apex:outputField value="{!Zen__Release__c.Zen__Quality_Manager__c}"/>
+        <apex:outputField value="{!Zen__Release__c.Zen__End_Date__c}"/>
+        <apex:outputField value="{!Zen__Release__c.Zen__Development_Manager__c}"/>
+        </apex:pageBlockSection>
+        </apex:pageblock>
+        </apex:form>
+        <apex:relatedList list="Scope_Items__r"/>
+        <apex:relatedList list="Test_Plans__r"/>
+    
+ 
+</apex:page>

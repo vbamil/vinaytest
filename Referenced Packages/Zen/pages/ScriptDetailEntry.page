@@ -1,0 +1,98 @@
+<apex:page standardcontroller="Zen__Test_Script_Detail__c" extensions="Zen.ScriptDetailController" id="scd">
+  <script>
+    function gup( name )
+    {
+      name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
+      var regexS = "[\\?&]"+name+"=([^&#]*)";
+      var regex = new RegExp( regexS );
+      var results = regex.exec( window.location.href );
+      if( results == null )
+        return "";
+      else
+        return results[1];
+    }
+    function SETSCN(){
+        try{
+            var ts=gup('ScriptNumber');
+            if(ts!=''){
+                document.getElementById("{!$Component.scd.frm.pb.scrin}").value=ts;       
+                var ctl = document.getElementById("{!$Component.scd.frm.pb.pgs.pgsnumbercell.scrindisabled}");
+                ctl.setAttribute('value',ts);
+                ctl.setAttribute('disabled','true');
+            }    
+            var tsname=gup('ScriptName');
+            if(tsname!='')
+                document.getElementById("{!$Component.scd.frm.pb.pgs.pgsnamecell.scrname}").value=tsname;       
+            var tpnumber=gup('TestPlanNumber');
+            if(tpnumber!='')
+                document.getElementById("{!$Component.scd.frm.pb.pgstpname.pgstpnamecell.tpnumber}").value=tpnumber;       
+    
+                
+        }
+        catch(e)
+        {
+        alert(e);
+        }
+        }
+        window.onload=SETSCN; 
+        
+  </script>
+ 
+  <apex:form id="frm" styleClass="Release__c">
+  <apex:pageBlock id="pb">
+         <apex:messages />
+         <p/>
+         <h2>Test Case Steps Edit</h2>
+         <p/>
+         <apex:pageBlockButtons >
+             <apex:commandButton value="Add Step" action="{!AddStep}" reRender="detailtable"/>
+             <apex:commandButton value="Save" action="{!save}"/>
+             <apex:commandButton value="Quick Save" action="{!quicksave}"/>
+             <apex:commandButton value="Cancel" action="{!Cancel}"/>
+         </apex:pageBlockButtons>
+
+         
+         <apex:inputHidden value="{!ScriptNumber}" id="scrin"/>      
+         <apex:pageBlockSection columns="2" id="pgs">        
+            <apex:pageblocksectionItem id="pgsnumbercell">
+                        Test Case Number
+                        <apex:inputText value="{!ScriptNumber}" id="scrindisabled"/>
+            </apex:pageblocksectionItem>
+            <apex:pageblocksectionItem id="pgsnamecell">
+                        Test Case Name
+                        <apex:inputText value="{!ScriptName}" id="scrname" disabled="true" size="37"/>
+            </apex:pageblocksectionItem>
+         </apex:pageBlockSection>
+
+         <apex:pageBlockSection columns="2" id="pgstpname">
+            <apex:pageblocksectionItem id="pgstpnamecell">
+                        Test Plan
+                        <apex:inputText value="{!TestPlanNumber}" id="tpnumber" disabled="true" styleClass="Test_Script__c"/>
+            </apex:pageblocksectionItem>
+            <apex:pageblocksectionItem id="pgstobjectivecell">
+                        Objective
+                         <apex:inputTextarea value="{!Objective}" cols="40" disabled="true" rows="4"/>
+            </apex:pageblocksectionItem>
+            
+            
+         </apex:pageBlockSection>
+
+
+         <apex:pageBlockSection columns="1">
+             <apex:pageblockTable value="{!ScriptDetails}" var="dtl" width="100%" id="detailtable">
+             <apex:column headerValue="Step Number">
+                 <apex:inputTextarea value="{!dtl.Zen__Step_Number__c}" cols="5"/>
+             </apex:column>
+             <apex:column headerValue="Description">
+                 <apex:inputTextarea value="{!dtl.Zen__Description__c}" cols="80"/>
+             </apex:column>
+             <apex:column headerValue="Expected Behavior">
+                 <apex:inputTextarea value="{!dtl.Zen__Expected_Behavior__c}" cols="80"/>
+             </apex:column>
+         </apex:PageblockTable>
+         </apex:pageBlockSection>
+         
+  </apex:pageBlock>
+  </apex:form>
+  
+</apex:page>

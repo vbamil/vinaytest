@@ -1,0 +1,15 @@
+<apex:page standardController="Zen__Requirement__c" extensions="Zen.deepcloneRequirement">
+<apex:form >
+<apex:pageBlock >
+<apex:messages />
+
+<apex:pageBlockButtons >
+<apex:commandButton value="Clone" action="{!cloneReq}"/>
+<apex:inputCheckbox id="clonetestcase" value="{!clonetestcase}"/><b>Test Cases</b>
+<apex:inputCheckbox id="cloneparent" value="{!cloneparent}"/><b>Child Requirements</b>
+<!--<apex:commandButton value="Clone with Test Cases" action="{!cloneWithTestCases}"/>-->
+</apex:pageBlockButtons>
+<apex:detail />
+</apex:pageBlock>
+</apex:form>
+ </apex:page>

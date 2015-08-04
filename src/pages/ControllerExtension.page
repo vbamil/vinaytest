@@ -1,0 +1,27 @@
+<apex:page standardController="Account" extensions="StandardControllerExtension">
+    <style>
+    .locationError { color: blue; font-weight: strong;}
+    .employeeError { color: green; font-weight: strong;}
+    </style>
+    
+    <apex:form >
+        <apex:pageblock >
+        <apex:pageblockButtons >
+            <apex:commandButton action="{!save}" value="save" />
+        </apex:pageblockButtons>
+        <apex:pageblockSection >
+        <apex:inputField value="{!Account.Name}" id="Location_validation"/>
+        <apex:inputField value="{!Account.Rating}" />
+        <apex:message for="Location_validation" styleClass="locationError" />
+        </apex:pageblockSection>
+        </apex:pageblock>
+        <apex:pageBlock >
+        <apex:pageblocktable value="{!childOppties}" var="co">
+    <apex:column value="{!co.Name}"/>
+    <apex:column value="{!co.Amount}"/>
+    <apex:column value="{!co.StageName}"/>
+    <apex:column value="{!co.CloseDate}"/>
+</apex:pageblocktable>
+</apex:pageBlock>
+    </apex:form>
+</apex:page>

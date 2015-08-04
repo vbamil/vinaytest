@@ -1,0 +1,53 @@
+<apex:page Controller="Zen.DefectsController">
+<Style>
+.High{ background-color:#F87217}
+.Medium{ background-color:#FFF8C6}
+</Style>
+    <apex:form >
+    <h1 style="color:black">Defects</h1>
+    <br/>
+    <apex:pageBlock id="ThePageBlock">
+  <apex:pageBlockTable value="{!DefectsList}" var="df1" rows="5" columns="6" id="TheTable">
+  <apex:column headerValue="" styleClass="{!df1.Zen__Priority__c}">
+    <apex:commandLink action="{!search}" reRender="detail">View Details<apex:param name="dfid" value="{!df1.id}"/></apex:commandLink>
+  </apex:column>
+  <apex:column headervalue="Defect Number" styleClass="{!df1.Zen__Priority__c}">
+  <apex:outputLink value="{!URLFOR($Action.Defect__c.View, df1.id)}">{!df1.Name}</apex:outputLink>
+  </apex:column>
+  <apex:column value="{!df1.Zen__Defect_Title__c}" styleClass="{!df1.Zen__Priority__c}"/>
+  <apex:column value="{!df1.Zen__Severity__c}" styleClass="{!df1.Zen__Priority__c}"/>
+  <apex:column value="{!df1.Zen__Priority__c}" styleClass="{!df1.Zen__Priority__c}"/>
+  <apex:column value="{!df1.CreatedDate}" styleClass="{!df1.Zen__Priority__c}"/>
+  </apex:pageBlockTable>
+    <br/>
+        <apex:outputPanel layout="block"  id="otpNav2"><b>
+             <apex:image url="/img/search_prevarrow_disabled.gif" styleClass="prevArrow" rendered="{!NOT(Con.HasPrevious)}"/>
+             <apex:image url="/img/search_prevarrow.gif" title="Previous" styleClass="prevArrow" rendered="{!Con.HasPrevious}"/>
+             &nbsp;<apex:commandLink action="{!Previous}" title="Previous" value="Previous" rendered="{!Con.HasPrevious}"/>
+             <apex:outputPanel styleClass="pShowLess noLink" style="color:grey" rendered="{!NOT(Con.HasPrevious)}">Previous</apex:outputPanel>         
+             &nbsp;({!IF(Con.PageNumber == 1,1,((Con.PageNumber -1) * Con.PageSize)+1)}-{!IF(Con.resultSize < Con.PageSize,Con.resultSize,Con.PageNumber * Con.pageSize)})of {!con.resultSize}&nbsp;
+             <apex:outputPanel styleClass="pShowLess noLink" style="color:grey" rendered="{!NOT(Con.HasNext)}">Next</apex:outputPanel>         
+             <apex:commandLink title="Next Page" value="Next" rendered="{!Con.HasNext}" action="{!Next}"/>&nbsp;
+             &nbsp;<apex:image url="/img/search_nextarrow.gif" title="Next" styleClass="nextArrow" rendered="{!Con.HasNext}"/>
+             <apex:image url="/img/search_nextarrow_disabled.gif" rendered="{!NOT(Con.HasNext)}"/></b>          
+   </apex:outputPanel>   
+  
+
+
+  <apex:outputPanel id="detail"> 
+  <table>
+      <td>
+          <apex:inputTextarea rows="10" cols="110" readonly="true" value="{!DefectDetail}"></apex:inputTextarea>
+      </td>
+      <td>
+         <apex:inputTextarea rows="10" cols="110" readonly="true" value="{!DefectComment}"></apex:inputTextarea>
+         <apex:inputTextarea rows="2" cols="110" value="{!Comment}"/>
+         <apex:commandLink action="{!addcomment}" value="Add Comment" >
+          <apex:param name="DefectId" value="{!DefectId}"/>
+          </apex:commandLink>           
+      </td>
+  </table>
+  </apex:outputPanel>
+ </apex:pageBlock>
+  </apex:form>
+</apex:page>

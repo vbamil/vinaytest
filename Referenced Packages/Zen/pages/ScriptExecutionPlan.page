@@ -1,0 +1,109 @@
+<apex:page standardcontroller="Zen__Test_Plan__c" extensions="Zen.ScriptExecutionPlanController" tabStyle="My_Test_Case_Execution__tab" >
+<style>
+.passed{ background-color: #33FFCC;}
+.Failed{ background-color: #F87217 }
+</style>
+  <apex:form >
+  <h1> Test Case Execution Details </h1>
+  <apex:PageBlock >
+ <!--<apex:commandButton action="{!search}" value="Retrieve Pending Test Cases"/>-->
+ <apex:outputPanel layout="block"  id="otpNav2"><b>
+             <apex:image url="/img/search_prevarrow_disabled.gif" styleClass="prevArrow" rendered="{!NOT(Con.HasPrevious)}"/>
+             <apex:image url="/img/search_prevarrow.gif" title="Previous" styleClass="prevArrow" rendered="{!Con.HasPrevious}"/>
+             &nbsp;<apex:commandLink action="{!Previous}" title="Previous" value="Previous" rendered="{!Con.HasPrevious}"/>
+             <apex:outputPanel styleClass="pShowLess noLink" style="color:grey" rendered="{!NOT(Con.HasPrevious)}">Previous</apex:outputPanel>         
+             &nbsp;({!IF(Con.PageNumber == 1,1,((Con.PageNumber -1) * Con.PageSize)+1)}-{!IF(Con.resultSize < Con.PageSize,Con.resultSize,Con.PageNumber * Con.pageSize)})of {!con.resultSize}&nbsp;
+             <apex:outputPanel styleClass="pShowLess noLink" style="color:grey" rendered="{!NOT(Con.HasNext)}">Next</apex:outputPanel>         
+             <apex:commandLink title="Next Page" value="Next" rendered="{!Con.HasNext}" action="{!Next}"/>&nbsp;
+             &nbsp;<apex:image url="/img/search_nextarrow.gif" title="Next" styleClass="nextArrow" rendered="{!Con.HasNext}"/>
+             <apex:image url="/img/search_nextarrow_disabled.gif" rendered="{!NOT(Con.HasNext)}"/></b>          
+   </apex:outputPanel>   
+   
+ <apex:outputPanel id="headerpanel" rendered="{!isListsizezero}">
+  <apex:pageBlockTable value="{!sep}" var="se">
+   <apex:column headerValue="" >  </apex:column>     
+    <apex:column value="{!se.Zen__Test_Script__c}" styleClass="{!se.Zen__Test_Script__c}">
+     <apex:facet name="header">
+       <apex:commandLink action="{!ViewData}" value="Test Case Number{!IF(sortExpression=='Test_Script__c',IF(sortDirection='ASC','▼','▲'),'')}">    
+         <apex:param value="Test_Script__c" name="column" assignTo="{!sortExpression}" ></apex:param>
+       </apex:commandLink>
+     </apex:facet>
+  </apex:column>
+
+   <apex:column value="{!se.Zen__Script_Number__c}" styleClass="{!se.Zen__Status__c}">
+     <apex:facet name="header">
+       <apex:commandLink action="{!ViewData}" value="Test Case Name{!IF(sortExpression=='Script_Number__c',IF(sortDirection='ASC','▼','▲'),'')}">
+        
+         <apex:param value="Script_Number__c" name="column" assignTo="{!sortExpression}" ></apex:param>
+       </apex:commandLink>
+     </apex:facet>
+  </apex:column>
+
+
+  <apex:column value="{!se.Zen__Planned_Execution_Date__c}" styleClass="{!se.Zen__Status__c}">
+     <apex:facet name="header">
+       <apex:commandLink action="{!ViewData}" value="Planned Execution Date{!IF(sortExpression=='Planned_Execution_Date__c',IF(sortDirection='ASC','▼','▲'),'')}">
+         <apex:param value="Planned_Execution_Date__c" name="column" assignTo="{!sortExpression}" ></apex:param>
+       </apex:commandLink>
+     </apex:facet>
+  </apex:column>
+
+  <apex:column value="{!se.Zen__Status__c}" styleClass="{!se.Zen__Status__c}">
+     <apex:facet name="header">
+       <apex:commandLink action="{!ViewData}" value="Status{!IF(sortExpression=='Status__c',IF(sortDirection='ASC','▼','▲'),'')}">
+         <apex:param value="Status__c" name="column" assignTo="{!sortExpression}" ></apex:param>
+       </apex:commandLink>
+     </apex:facet>
+  </apex:column>   
+  </apex:pageBlockTable>
+  </apex:outputPanel>
+   
+ <apex:outputPanel id="valuepanel" rendered="{!NOT(isListsizezero)}" >
+  <apex:pageBlockTable value="{!sep}" var="se">
+    <apex:column headerValue="" styleClass="{!se.Zen__Status__c}">
+    <apex:commandLink action="{!runscript}" value="Run Script" >
+        <apex:param name="testcaseid" value="{!se.Zen__Test_Script__c}"></apex:param>
+        <!--<apex:param name="scrid" value="{!se.Zen__Script_Number__c}"></apex:param>-->
+        <apex:param name="scpid" value="{!se.id}"></apex:param>
+    </apex:commandLink>
+  </apex:column>
+ 
+   <apex:column value="{!se.Zen__Test_Script__c}" styleClass="{!se.Zen__Status__c}">
+     <apex:facet name="header">
+       <apex:commandLink action="{!ViewData}" value="Test Case Number{!IF(sortExpression=='Test_Script__c',IF(sortDirection='ASC','▼','▲'),'')}">    
+         <apex:param value="Test_Script__c" name="column" assignTo="{!sortExpression}" ></apex:param>
+       </apex:commandLink>
+     </apex:facet>
+  </apex:column>
+  
+  
+  <apex:column value="{!se.Zen__Script_Number__c}" styleClass="{!se.Zen__Status__c}">
+     <apex:facet name="header">
+       <apex:commandLink action="{!ViewData}" value="Test Case Name{!IF(sortExpression=='Script_Number__c',IF(sortDirection='ASC','▼','▲'),'')}">
+         <apex:param value="Script_Number__c" name="column" assignTo="{!sortExpression}" ></apex:param>
+       </apex:commandLink>
+     </apex:facet>
+  </apex:column>
+  
+ 
+  <apex:column value="{!se.Zen__Planned_Execution_Date__c}" styleClass="{!se.Zen__Status__c}">
+     <apex:facet name="header">
+       <apex:commandLink action="{!ViewData}" value="Planned Execution Date{!IF(sortExpression=='Planned_Execution_Date__c',IF(sortDirection='ASC','▼','▲'),'')}">
+         <apex:param value="Planned_Execution_Date__c" name="column" assignTo="{!sortExpression}" ></apex:param>
+       </apex:commandLink>
+     </apex:facet>
+  </apex:column>
+
+  <apex:column value="{!se.Zen__Status__c}" styleClass="{!se.Zen__Status__c}">
+     <apex:facet name="header">
+       <apex:commandLink action="{!ViewData}" value="Status{!IF(sortExpression=='Status__c',IF(sortDirection='ASC','▼','▲'),'')}">
+         <apex:param value="Status__c" name="column" assignTo="{!sortExpression}" ></apex:param>
+       </apex:commandLink>
+     </apex:facet>
+  </apex:column>   
+  </apex:pageBlockTable>
+  </apex:outputPanel>  
+  </apex:PageBlock>
+
+  </apex:form>
+</apex:page>

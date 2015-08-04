@@ -1,0 +1,54 @@
+<apex:page StandardController="Zen__Test_Script_Detail__c" extensions="Zen.ScriptDetailController" id="scd">
+  <script>
+    function gup( name )
+    {
+      name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
+      var regexS = "[\\?&]"+name+"=([^&#]*)";
+      var regex = new RegExp( regexS );
+      var results = regex.exec( window.location.href );
+      if( results == null )
+        return "";
+      else
+        return results[1];
+    }
+    function SETSCN(){
+        try{
+        var ts=gup('ScriptNumber');
+        document.getElementById("{!$Component.scd.frm.pb.pgs.scrin}").value=ts;
+          }
+        catch(e)
+        {
+        alert(e);
+        }
+        }
+        window.onload=SETSCN; 
+  </script>
+  <apex:form id="frm">
+  <apex:pageBlock id="pb">
+         <apex:messages />
+         <apex:pageBlockButtons >
+         <apex:commandButton value="Edit Steps" action="{!search}"/>
+         <apex:commandButton value="Save" action="{!save}"/>
+         </apex:pageBlockButtons>
+         <apex:pageBlockSection id="pgs">
+         <apex:inputText value="{!ScriptNumber}" id="scrin"/>
+         <apex:outputField value="{!scr.Zen__Test_Script_Name__c}"/>
+         </apex:pageBlockSection>
+         <apex:pageBlockSection columns="1" >
+         <apex:dataTable value="{!ScriptDetails}" var="dtl" width="100%">
+         <apex:column headerValue="Step Number">
+         <apex:inputfield value="{!dtl.Zen__Step_Number__c}"/>
+         </apex:column>
+         <apex:column headerValue="Description">
+         <apex:inputtext value="{!dtl.Zen__Description__c}" size="50" />
+         </apex:column>
+         <apex:column headerValue="Expected Behavior">
+         <apex:inputtext value="{!dtl.Zen__Expected_Behavior__c}" size="50"/>
+         </apex:column>
+         </apex:dataTable>
+         </apex:pageBlockSection>
+         
+  </apex:pageBlock>
+  </apex:form>
+  
+</apex:page>

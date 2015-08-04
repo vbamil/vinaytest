@@ -1,0 +1,5 @@
+<apex:page standardController="Zen__Scope_Item__c" recordSetVar="sc" >
+<script>
+openPopup("/_ui/ui/setup/imp/ImportWizard");
+</script>
+</apex:page>

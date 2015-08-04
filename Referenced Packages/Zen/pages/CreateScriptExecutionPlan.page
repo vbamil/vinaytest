@@ -1,0 +1,24 @@
+<apex:page standardController="Zen__Test_Plan__c" extensions="Zen.CreateExecutionPlanExt">
+  <apex:form >
+  <apex:pageBlock >
+  <apex:pageBlockButtons >
+  <apex:commandButton action="{!AddPlan}" value="Save"/>
+  <apex:commandButton action="{!Cancel}" value="Cancel"/>
+ <!-- <apex:commandButton action="{!search}" value="Retrieve"/>-->
+  </apex:pageBlockButtons>
+  <apex:pageBlockSection >
+  <apex:outputField value="{!Zen__Test_Plan__c.Zen__Test_Name__c}"/>
+  </apex:pageBlockSection>
+  <apex:pageBlockTable value="{!scepl}" var="tscr">
+  <apex:column value="{!tscr.Zen__Test_Script__c}"/>
+  <!--<apex:column value="{!tscr.Script_Number__c}"/>-->
+  <apex:column headerValue="Planned Execution Date">
+  <apex:inputField value="{!tscr.Zen__Planned_Execution_Date__c}"/>
+  </apex:column>
+  <apex:column headerValue="Assigned To">
+  <apex:inputField value="{!tscr.Zen__Assigned_To__c}"/>
+  </apex:column>
+  </apex:pageBlockTable>
+  </apex:pageBlock>
+  </apex:form>
+</apex:page>

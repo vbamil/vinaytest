@@ -1,0 +1,25 @@
+<apex:page standardController="Zen__Test_Script__c" extensions="Zen.TestCaseDoc">
+<apex:form >
+<apex:commandButton action="{!SaveAttachment}" value="Attach Document to Test Case"/>
+<apex:commandButton action="{!Cancel}" value="Cancel"/>
+<p><b>Test Case Details</b></p><br/>
+<apex:pageBlock >
+<apex:PageblockSection >
+
+<apex:outputField value="{!Zen__Test_Script__c.Name}"/>
+<apex:outputField value="{!Zen__Test_Script__c.Zen__Test_Script_Name__c}"/>
+<apex:outputField value="{!Zen__Test_Script__c.Zen__Test_Plan_Name__c}"/>
+<apex:outputField value="{!Zen__Test_Script__c.Zen__Objective__c}"/>
+</apex:PageblockSection>
+
+
+<apex:pageBlockTable value="{!tsde}" var="scd">
+<apex:column value="{!scd.Zen__Step_Number__c}" />
+<apex:column value="{!scd.Zen__Description__c}" />
+<apex:column value="{!scd.Zen__Expected_Behavior__c}" />
+<apex:column value="{!scd.Zen__Parameters_data__c}"/>
+</apex:pageBlockTable>
+
+</apex:pageBlock>
+</apex:form>
+</apex:page>

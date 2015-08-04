@@ -1,0 +1,80 @@
+<apex:page standardController="Zen__Scope_Item__c" extensions="Zen.ReqDocExt" showHeader="false" sidebar="false">
+<apex:form >
+<apex:pageBlock >
+<apex:commandButton action="{!ExtSaveAttachment}" value="Attach Document to Scope"/>
+<apex:commandButton action="{!Cancel}" value="Cancel"/>
+</apex:pageBlock>
+</apex:form>
+<p style="font-size: 14pt; color: blue">
+Business Requirements Document <br/>
+  <apex:pageBlock >  
+  <apex:pageBlockSection >  
+             <apex:pageblockTable value="{!Zen__Scope_Item__c}" var="dtl" width="100%">
+             <apex:column headerValue="Scope Item Name">
+                 {!dtl.Zen__Scope_Item_Name__c}
+             </apex:column>
+             <apex:column headerValue="Scope Item Number">
+                 {!dtl.Name}
+             </apex:column>
+         </apex:PageblockTable>
+         </apex:pageBlockSection>        
+  </apex:pageBlock>     
+</p><br/>
+<p style="font-size: 12pt; color: blue">Purpose of This Document</p>
+<p>
+ This document provides the project deliverables and is used to identify, categorize and describe the business and functional requirements from the system. 
+ This enables to develop common understanding of the system requirements among the stakeholders and validating that actual implementation conforms to those requirements. 
+ As the project moves forward, this document will be revised and refined to reflect any changes. 
+ It must follow the project’s change control process.
+</p><br/>
+ <p style="font-size: 12pt; color: blue">Executive Summary</p><br/>
+ <apex:outputField value="{!Zen__Scope_Item__c.Zen__Executive_Summary__c}"/>
+ <p style="font-size: 12pt; color: blue">Business Overview</p><br/>
+ <apex:outputField value="{!Zen__Scope_Item__c.Zen__Business_Overview__c}"/>
+ <p style="font-size: 12pt; color: blue">Business Objectives</p><br/>
+ <apex:outputField value="{!Zen__Scope_Item__c.Zen__Business_Objectives__c}"/>
+<p style="font-size: 12pt; color: blue">Requirements</p>
+<apex:pageBlock >
+    <apex:pageBlockTable value="{!ReqList}" var="req" title="Requirements" cellpadding="1" border="1">
+        <apex:column value="{!req.Zen__Requirement_Control_Number__c}"/>
+        <apex:column value="{!req.Zen__Title__c}"/>    
+        <apex:column value="{!req.Zen__Revision_Number__c}"/>     
+        <apex:column value="{!req.Name}"/>    
+    </apex:pageBlockTable>
+    
+    <apex:repeat value="{!ReqList}" var="req">
+     <hr></hr>
+    <p style="font-size: 8pt; color: black;font-weight: bold"> Requirement Control Number </p>
+    <apex:outputField value="{!req.Zen__Requirement_Control_Number__c}"></apex:outputField>
+    <p style="font-size: 8pt; color: black;font-weight: bold"> Title </p>
+    <apex:outputField value="{!req.Zen__Title__c}"></apex:outputField>
+    <br/>
+    <p style="font-size: 8pt; color: black;font-weight: bold"> Revision</p>
+    <apex:outputField value="{!req.Zen__Revision_Number__c}"></apex:outputField>
+    <br/>
+    <p style="font-size: 8pt; color: black;font-weight: bold"> Requirement Details</p>
+    <apex:outputField value="{!req.Zen__Requirement_Details__c}"></apex:outputField><br/>
+    <p style="font-size: 8pt; color: black;font-weight: bold"> Use Case </p>
+    <apex:outputField value="{!req.Zen__Use_case__c}"></apex:outputField><br/>
+    <p style="font-size: 8pt; color: black ;font-weight: bold"> Acceptance Criteria </p>
+    <apex:outputField value="{!req.Zen__Acceptance_Criteria__c}"></apex:outputField><br/>
+    <p style="font-size: 8pt; color: black ;font-weight: bold"> Remarks </p>
+    <apex:outputField value="{!req.Zen__Remarks__c}"></apex:outputField><br/>
+
+ </apex:repeat>
+</apex:pageBlock>
+<p style="font-size: 12pt; color: blue">Test Plans</p>
+<apex:pageBlock >
+    <apex:pageBlockTable value="{!Zen__Scope_Item__c.Test_Plans__r}" var="testplanslist" title="Test Plans" cellpadding="1" border="1">
+        <apex:column value="{!testplanslist.Name}"/>
+        <apex:column value="{!testplanslist.Zen__Test_Name__c}"/>
+    </apex:pageBlockTable>
+</apex:pageBlock>
+<p style="font-size: 12pt; color: blue">Change Requests</p>
+<apex:pageBlock >
+    <apex:pageBlockTable value="{!ChangeReqList}" var="changelist" title="Change Requests" cellpadding="1" border="1">
+        <apex:column value="{!changelist.Name}"/>
+        <apex:column value="{!changelist.Zen__Root_Cause__c}"/>
+    </apex:pageBlockTable>
+</apex:pageBlock>
+</apex:page>
